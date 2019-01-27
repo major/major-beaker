@@ -4,7 +4,7 @@
 . /usr/bin/rhts_environment.sh
 
 # Try to install python
-if [ -x "/usr/bin/dnf"]; then
+if [ -x "/usr/bin/dnf" ]; then
     dnf -y install python36
 else
     yum -y install python
@@ -25,6 +25,9 @@ virtualenv /opt/ansible-venv
 
 # Ensure ansible is installed
 /opt/ansible-venv/bin/ansible --version
+
+# Run Ansible
+/opt/ansible-venv/bin/ansible-playbook -i hosts.txt playbook.yml
 
 if [ $? -eq 0 ]; then
     report_result finished PASS 0
