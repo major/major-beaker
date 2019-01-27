@@ -14,3 +14,11 @@ virtualenv /opt/ansible-venv
 
 # Ensure ansible is installed
 /opt/ansible-venv/bin/ansible --version
+
+if [ $? -eq 0 ]; then
+    report_result finished PASS 0
+else
+    report_result finished FAIL 1
+fi
+
+exit 0
