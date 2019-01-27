@@ -4,6 +4,7 @@
 . /usr/bin/rhts_environment.sh
 
 # Install pre-requisites for Ansible
+yum -y install python
 wget -O /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py
 python /opt/get-pip.py
 pip install virtualenv
