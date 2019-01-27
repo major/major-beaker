@@ -3,8 +3,18 @@
 # Source the common test script helpers
 . /usr/bin/rhts_environment.sh
 
+# Try to install python
+if [ -x "/usr/bin/dnf"]; then
+    dnf -y install python36
+else
+    yum -y install python
+    if [ $? -ne 0 ]; then
+        yum -y install python36
+    fi
+fi
+
+
 # Install pre-requisites for Ansible
-yum -y install python
 wget -O /opt/get-pip.py https://bootstrap.pypa.io/get-pip.py
 python /opt/get-pip.py
 pip install virtualenv

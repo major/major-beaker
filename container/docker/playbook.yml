@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  tasks:
+
+    - name: Install docker
+      package:
+        name: docker
+        state: present
+
+    - name: Enable docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install podman
+      package:
+        name: docker
+        state: present
+      ignore_errors: yes
