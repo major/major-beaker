@@ -5,6 +5,6 @@
 
     - name: Install podman
       package:
-        name: docker
+        name: podman
         state: present
       ignore_errors: yes
