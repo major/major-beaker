@@ -4,10 +4,13 @@
 . /usr/bin/rhts_environment.sh
 
 # Try to install ansible
-if [ -x "/usr/bin/dnf" ]; then
-    dnf -y install ansible
-else
+if [ "${FAMILY}" == "RedHatEnterpriseLinux8" ]; then
+    yum -y install http://mirrors.kernel.org/fedora/updates/29/Everything/x86_64/Packages/a/ansible-2.7.5-1.fc29.noarch.rpm
+elif [ "${FAMILY}" == "RedHatEnterpriseLinux7" ]; then
+    yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     yum -y install ansible
+elif [ "${FAMILY}" == "Fedora29" ]; then
+    dnf -y install ansible
 fi
 
 # Try to install python
