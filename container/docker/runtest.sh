@@ -3,40 +3,35 @@
 # Source the common test script helpers
 . /usr/bin/rhts_environment.sh
 
-# Try to install ansible
+# Try to install python
 if [ "${FAMILY}" == "RedHatEnterpriseLinux8" ]; then
-    yum -y install http://mirrors.kernel.org/fedora/updates/29/Everything/x86_64/Packages/a/ansible-2.7.5-1.fc29.noarch.rpm
+    dnf -y install python36 python36-devel
 elif [ "${FAMILY}" == "RedHatEnterpriseLinux7" ]; then
-    yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    yum -y install ansible
+    yum -y install python python-devel
 elif [ "${FAMILY}" == "Fedora29" ]; then
-    dnf -y install ansible
+    dnf -y install python36 python36-devel
 fi
 
-# Try to install python
-# if [ -x "/usr/bin/dnf" ]; then
-#     dnf -y install python36
-# else
-#     yum -y install python
-#     if [ $? -ne 0 ]; then
-#         yum -y install python36
-#     fi
-# fi
+# Make python symlink if needed.
+if [ ! -x "/usr/bin/python" ]; then
+    ln -sf /usr/bin/python3.6 /usr/bin/python
+    python --version
+fi
 
 # Install pre-requisites for Ansible
-# wget -O /opt/get-pip.py https://bootstrap.pypa.io/get-pip.py
-# python /opt/get-pip.py
-# pip install virtualenv
-# virtualenv /opt/ansible-venv
+wget -O /opt/get-pip.py https://bootstrap.pypa.io/get-pip.py
+python /opt/get-pip.py
+pip install virtualenv
+virtualenv /opt/ansible-venv
 
 # Install the latest stable ansible version
-# /opt/ansible-venv/bin/pip install ansible
+/opt/ansible-venv/bin/pip install ansible
 
 # Ensure ansible is installed
-ansible --version
+/opt/ansible-venv/bin/ansible --version
 
 # Run Ansible
-ansible-playbook -i hosts.txt playbook.yml
+/opt/ansible-venv/bin/ansible-playbook -i hosts.txt playbook.yml
 
 if [ $? -eq 0 ]; then
     report_result finished PASS 0
