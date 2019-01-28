@@ -8,6 +8,7 @@ if [ "${FAMILY}" == "RedHatEnterpriseLinux8" ]; then
     dnf -y install python36 python36-devel
 elif [ "${FAMILY}" == "RedHatEnterpriseLinux7" ]; then
     yum -y install python python-devel
+    subscription-manager repos --enable rhel-7-server-extras-rpms
 elif [ "${FAMILY}" == "Fedora29" ]; then
     dnf -y install python36 python36-devel
 fi

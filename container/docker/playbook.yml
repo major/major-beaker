@@ -7,4 +7,10 @@
       package:
         name: podman
         state: present
-      ignore_errors: yes
+
+    - name: Download some podman containers
+      command: podman pull "{{ item }}"
+      with_items:
+        - "fedora:29"
+        - "centos:7"
+        - "alpine:latest"
