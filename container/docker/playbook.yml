@@ -14,3 +14,6 @@
         - "fedora:29"
         - "centos:7"
         - "alpine:latest"
+
+    - name: Run a command in a container
+      command: "podman run --rm centos:7 rpm -qa"
