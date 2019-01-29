@@ -7,6 +7,8 @@
       package:
         name: podman
         state: present
+      ignore_errors: yes
+      register: podman_install
 
     - name: Download some podman containers
       command: podman pull "{{ item }}"
@@ -14,6 +16,8 @@
         - "fedora:29"
         - "centos:7"
         - "alpine:latest"
+      when: podman_install | changed
 
     - name: Run a command in a container
       command: "podman run --rm centos:7 rpm -qa"
+      when: podman_install | changed
