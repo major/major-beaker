@@ -33,3 +33,13 @@
       command: /opt/ltp/runltp
       args:
         chdir: /opt/ltp
+      async: 1800
+      poll: 0
+      register: ltp_run
+
+    - name: Check if LTP run has completed
+      async_status:
+        jid: "{{ ltp_run.ansible_job_id }}"
+      register: job_result
+      until: job_result.finished
+      retries: 1800
