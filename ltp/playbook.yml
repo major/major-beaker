@@ -3,7 +3,19 @@
 - hosts: all
   vars:
     required_packages:
+      - automake
       - "@Development Tools"
+      - libacl
+      - libacl-devel
+      - libaio
+      - libaio-devel
+      - libntirpc-devel
+      - lksctp-tools-devel
+      - numactl-devel
+      - numactl-libs
+      - xfsprogs
+      - xfsprogs-devel
+      - uClibc-devel
   tasks:
 
     - name: Install requirements
@@ -16,17 +28,17 @@
         repo: https://github.com/linux-test-project/ltp
         dest: /opt/ltp
         version: 20190115
-        clone: yes
-        update: yes
+        update: no
+        depth: 5
 
     - name: Compile LTP
       command: "{{ item }}"
       args:
         chdir: /opt/ltp
       with_items:
-        - make autotools
+        - "make -j{{ ansible_processor_vcpus }} autotools"
         - "./configure"
-        - make
+        - "make -j{{ ansible_processor_vcpus }}"
         - make install
 
     - name: Run LTP

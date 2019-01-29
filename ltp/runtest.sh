@@ -7,6 +7,7 @@
 /opt/ansible-venv/bin/ansible --version
 
 # Run Ansible
+export ANSIBLE_LOG_PATH=$OUTPUTFILE
 /opt/ansible-venv/bin/ansible-playbook -i hosts.txt playbook.yml
 
 if [ $? -eq 0 ]; then
